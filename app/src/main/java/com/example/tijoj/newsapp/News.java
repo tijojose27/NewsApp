@@ -44,7 +44,7 @@ public class News {
     }
 
     public String getPublishDate() {
-        String date = publishDate.substring(0,10);
+        String date = publishDate.substring(0, 10);
         return date;
     }
 }

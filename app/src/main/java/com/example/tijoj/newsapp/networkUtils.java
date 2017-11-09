@@ -23,16 +23,17 @@ import java.util.List;
 
 public class networkUtils {
 
-    private String LOG_TAG=getClass().getName();
+    private String LOG_TAG = getClass().getName();
     private String URL;
 
     public networkUtils(String URL) {
         this.URL = URL;
     }
 
-    public List<News> getMyNews(){
+    //GETTING THE NEWS FROM THE API
+    public List<News> getMyNews() {
         String jsonResp = "";
-        try{
+        try {
             jsonResp = makeHttpRequest(createUrl(URL));
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,6 +42,7 @@ public class networkUtils {
         return myNews;
     }
 
+    //CONVERT STRING TO URL SO IT CAN BE PASSED TO MAKEHTTPREQUEST
     private URL createUrl(String stringUrl) {
         URL url = null;
         try {
@@ -52,6 +54,7 @@ public class networkUtils {
         return url;
     }
 
+    //CONNECTING TO API
     private String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
         HttpURLConnection urlConnection = null;
@@ -69,12 +72,12 @@ public class networkUtils {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
-            }else{
-                Log.e(LOG_TAG,"Error response code : "+urlConnection.getResponseCode());
+            } else {
+                Log.e(LOG_TAG, "Error response code : " + urlConnection.getResponseCode());
             }
 
         } catch (IOException e) {
-            Log.e("IOExcepteion",e.toString());
+            Log.e("IOExcepteion", e.toString());
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -87,6 +90,7 @@ public class networkUtils {
         return jsonResponse;
     }
 
+    //READING FROM API
     private String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
@@ -101,13 +105,14 @@ public class networkUtils {
         return output.toString();
     }
 
-    public ArrayList<News> extractNewsFromJSON(String JsonNews){
+    //EXTRACTING JSON AND CONVERTING THEM SO WE CAN ADD THEM TO THE ARRAY
+    public ArrayList<News> extractNewsFromJSON(String JsonNews) {
         ArrayList<News> news = new ArrayList<>();
-        try{
+        try {
             JSONObject root = new JSONObject(JsonNews);
             JSONObject resp = root.getJSONObject("response");
             JSONArray results = resp.getJSONArray("results");
-            for (int i =0; i<results.length();i++){
+            for (int i = 0; i < results.length(); i++) {
                 JSONObject currObj = results.getJSONObject(i);
                 String heading = currObj.getString("webTitle");
                 String pubDate = currObj.getString("webPublicationDate");
@@ -118,15 +123,15 @@ public class networkUtils {
                 String article = currfield.getString("trailText");
 
                 JSONArray ref = currObj.getJSONArray("references");
-                String author="";
-                if(ref.length()!=0){
+                String author = "";
+                if (ref.length() != 0) {
                     author = ref.getString(0);
                 }
 
-                news.add(new News(secName, heading, article, url,author, pubDate));
+                news.add(new News(secName, heading, article, url, author, pubDate));
             }
-        }catch (JSONException e){
-            Log.e(LOG_TAG,"Parsing JSON fault");
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Parsing JSON fault");
         }
         return news;
     }

@@ -39,20 +39,25 @@ public class myCustomNewsAdapter extends ArrayAdapter<News>{
             rootView = LayoutInflater.from(getContext()).inflate(R.layout.news_item, parent, false);
         }
 
+        //GETTING VIEWS FROM LAYOUT
         TextView headingTV = rootView.findViewById(R.id.news_item_heading);
         TextView articleTV = rootView.findViewById(R.id.news_item_article);
         TextView dateTV = rootView.findViewById(R.id.news_item_date);
         TextView authorTV = rootView.findViewById(R.id.news_item_author);
         TextView sectionTV = rootView.findViewById(R.id.news_item_section);
 
+        //GETTING THE NEWS OBJECT FROM THE ARRAY
         final News currNews = getItem(position);
 
+        //SETTING NEWS OBJECT TEXTS
         headingTV.setText(currNews.getHeading());
         articleTV.setText(currNews.getArticle());
         dateTV.setText(currNews.getPublishDate());
         authorTV.setText(currNews.getAuthorName());
         sectionTV.setText(currNews.getSectionName());
 
+        //CREATING AN INTENT FROM CLICKING THE CARDS
+        // TO OPEN THE WEBBROSER AND GO TO THE URL OF THE NEWS ITEM
         rootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

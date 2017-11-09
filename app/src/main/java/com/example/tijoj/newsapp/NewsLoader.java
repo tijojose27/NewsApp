@@ -2,7 +2,6 @@ package com.example.tijoj.newsapp;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.content.Loader;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * Created by tijojose27 on 11/9/2017.
  */
 
-public class NewsLoader extends AsyncTaskLoader<List<News>>{
+public class NewsLoader extends AsyncTaskLoader<List<News>> {
 
     public String URL;
 
