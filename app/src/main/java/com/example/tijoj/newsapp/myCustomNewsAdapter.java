@@ -7,8 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.Inflater;
 
 /**
@@ -17,7 +22,7 @@ import java.util.zip.Inflater;
 
 public class myCustomNewsAdapter extends ArrayAdapter<News>{
 
-    public myCustomNewsAdapter(@NonNull Context context, @NonNull ArrayList<News> mynews) {
+    public myCustomNewsAdapter(@NonNull Context context, @NonNull List<News> mynews) {
         super(context, 0, mynews);
     }
 
@@ -27,6 +32,17 @@ public class myCustomNewsAdapter extends ArrayAdapter<News>{
 
         View rootView = convertView;
 
+        if(rootView==null){
+            rootView = LayoutInflater.from(getContext()).inflate(R.layout.news_item, parent, false);
+        }
+
+        TextView headingTV = rootView.findViewById(R.id.news_item_heading);
+        TextView articleTV = rootView.findViewById(R.id.news_item_article);
+
+        News currNews = getItem(position);
+
+        headingTV.setText(currNews.getHeading());
+        articleTV.setText(currNews.getArticle());
 
         return rootView;
     }

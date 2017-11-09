@@ -21,4 +21,5 @@ public class News {
     public String getArticle() {
         return article;
     }
+
 }
