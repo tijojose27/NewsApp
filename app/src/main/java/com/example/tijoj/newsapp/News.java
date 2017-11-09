@@ -6,12 +6,25 @@ package com.example.tijoj.newsapp;
 
 public class News {
 
+
+    public String sectionName;
     public String heading;
     public String article;
+    public String URL;
+    public String authorName;
+    public String publishDate;
 
-    public News(String heading, String article) {
+    public News(String sectionName, String heading, String article, String URL, String authorName, String publishDate) {
+        this.sectionName = sectionName;
         this.heading = heading;
         this.article = article;
+        this.URL = URL;
+        this.authorName = authorName;
+        this.publishDate = publishDate;
+    }
+
+    public String getSectionName() {
+        return sectionName;
     }
 
     public String getHeading() {
@@ -22,4 +35,16 @@ public class News {
         return article;
     }
 
+    public String getURL() {
+        return URL;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public String getPublishDate() {
+        String date = publishDate.substring(0,10);
+        return date;
+    }
 }

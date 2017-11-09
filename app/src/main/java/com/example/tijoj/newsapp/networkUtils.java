@@ -110,9 +110,20 @@ public class networkUtils {
             for (int i =0; i<results.length();i++){
                 JSONObject currObj = results.getJSONObject(i);
                 String heading = currObj.getString("webTitle");
+                String pubDate = currObj.getString("webPublicationDate");
+                String secName = currObj.getString("sectionName");
+                String url = currObj.getString("webUrl");
+
                 JSONObject currfield = currObj.getJSONObject("fields");
                 String article = currfield.getString("trailText");
-                news.add(new News(heading, article));
+
+                JSONArray ref = currObj.getJSONArray("references");
+                String author="";
+                if(ref.length()!=0){
+                    author = ref.getString(0);
+                }
+
+                news.add(new News(secName, heading, article, url,author, pubDate));
             }
         }catch (JSONException e){
             Log.e(LOG_TAG,"Parsing JSON fault");
