@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/query_title">
+
+    <EditTextPreference
+        android:defaultValue="us-news"
+        android:inputType="text"
+        android:key="@string/query_select_key"
+        android:selectAllOnFocus="true"
+        android:title="@string/query_select_title"/>
+
+</PreferenceScreen>

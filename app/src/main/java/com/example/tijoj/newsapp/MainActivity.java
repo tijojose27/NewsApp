@@ -1,11 +1,16 @@
 package com.example.tijoj.newsapp;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -15,7 +20,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
-    public String URL = "http://content.guardianapis.com/us-news?show-references=author&show-fields=all&api-key=test";
+    //public String URL = "http://content.guardianapis.com/us-news?show-references=author&show-fields=all&api-key=test";
+    public String START_URL = "http://content.guardianapis.com/search?show-references=author&show-fields=all&q=";
+    public String API_URL = "&api-key=test";
+    public String FINAL_URL ="";
 
     public ListView newsLV;
     public TextView nodataTV;
@@ -44,8 +52,34 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id==R.id.change_query){
+            Intent queryIntent = new Intent(this, SettingsActivity.class);
+            startActivity(queryIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public Loader<List<News>> onCreateLoader(int i, Bundle bundle) {
-        return new NewsLoader(this, URL);
+
+        //CREATING URL FROM QUERY
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String query = sharedPref.getString(getString(R.string.query_select_key),
+                getString(R.string.query_select_default));
+        query = query.trim();
+        //CREATING FINAL URL STRING
+        FINAL_URL = START_URL+query+API_URL;
+
+        return new NewsLoader(this, FINAL_URL);
     }
 
     @Override

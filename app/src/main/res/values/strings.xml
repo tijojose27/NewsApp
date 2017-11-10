@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">News App</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="get_query">Change Topics</string>
+
+    <string name="query_title">Search Settings</string>
+    <string name="query_select_key">select_query</string>
+    <string name="query_select_title">Search News</string>
+    <string name="query_select_default">us-news</string>
 </resources>
